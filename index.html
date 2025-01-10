@@ -3,60 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Similarité de Mots</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Jeu de Similarité de Mots</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Calculateur de Similarité de Mots</h1>
-        <input type="text" id="wordInput" placeholder="Entrez un mot...">
-        <button id="submitBtn">Envoyer</button>
-        <ul id="similarityList"></ul>
+        <h1>Jeu de Similarité de Mots</h1>
+        <form id="word-form">
+            <input type="text" id="word-input" placeholder="Entrez un mot..." required>
+            <button type="submit">Envoyer</button>
+        </form>
+
+        <table id="results-table">
+            <thead>
+                <tr>
+                    <th>N° Mot</th>
+                    <th>Mot</th>
+                    <th>Similarité (°C)</th>
+                    <th>Progression</th>
+                </tr>
+            </thead>
+            <tbody id="results-body">
+                <!-- Les résultats seront insérés ici -->
+            </tbody>
+        </table>
+
+        <div id="message"></div>
     </div>
 
-    <script>
-        document.getElementById('submitBtn').addEventListener('click', async () => {
-            const word = document.getElementById('wordInput').value;
-            if (!word) return;
-
-            const response = await fetch(`http://localhost:5000/similarity?word1=${word}&word2=référence`, {
-                method: 'POST', // Assurez-vous que votre API attend une méthode POST
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ word })
-            });
-
-            const data = await response.json();
-            if (response.ok) {
-                addToList(word, data.similarity);
-            } else {
-                alert(data.error || 'Une erreur s\'est produite.');
-            }
-
-            document.getElementById('wordInput').value = ''; // Réinitialiser l'input
-        });
-
-        function addToList(word, similarity) {
-            const list = document.getElementById('similarityList');
-            const listItem = document.createElement('li');
-            listItem.textContent = `${word} : ${similarity.toFixed(4)}`;
-
-            list.appendChild(listItem);
-            sortList();
-        }
-
-        function sortList() {
-            const list = document.getElementById('similarityList');
-            const items = Array.from(list.children);
-            items.sort((a, b) => {
-                const similarityA = parseFloat(a.textContent.split(': ')[1]);
-                const similarityB = parseFloat(b.textContent.split(': ')[1]);
-                return similarityB - similarityA; // Tri décroissant
-            });
-
-            items.forEach(item => list.appendChild(item)); // Réajouter les items triés
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>

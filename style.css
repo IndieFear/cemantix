@@ -1,55 +1,113 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 20px;
+    background-color: #4d7077;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 .container {
-    max-width: 600px;
-    margin: auto;
+    background-color: #32535a;
     padding: 20px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
 h1 {
-    text-align: center;
-    color: #333;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
 }
 
 input[type="text"] {
-    width: calc(100% - 30px);
     padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    width: 200px;
+    border: none;
+    border-radius: 5px;
     margin-right: 10px;
 }
 
 button {
-    padding: 10px 15px;
-    background-color: #28a745;
-    color: white;
+    padding: 10px 20px;
+    background-color: #607d8b;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
+    color: white;
+    font-weight: bold;
 }
 
 button:hover {
-    background-color: #218838;
+    background-color: #78909c;
 }
 
-ul {
-    list-style: none;
-    padding: 0;
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
 }
 
-li {
-    padding: 8px;
-    border-bottom: 1px solid #ddd;
+th, td {
+    padding: 10px;
+    border: 1px solid #607d8b;
 }
 
-li:last-child {
-    border-bottom: none;
+th {
+    background-color: #607d8b;
+    font-weight: bold;
 }
+
+td {
+    text-align: center;
+}
+
+#message {
+    margin-top: 20px;
+    font-size: 1.2em;
+    color: #ff4081;
+}
+
+progress {
+    width: 100px; /* Largeur de la barre de progression */
+    height: 20px;
+}
+
+.progress-container {
+    display: flex;
+    align-items: center;
+}
+
+progress::-webkit-progress-bar {
+    background-color: #f3f3f3;
+    border-radius: 5px;
+}
+
+progress::-webkit-progress-value {
+    background-color: #4caf50;
+    border-radius: 5px;
+    transition: width 1s ease; /* Animation fluide */
+}
+
+progress {
+    transition: width 1s ease;
+}
+
+.progress-value {
+    margin-left: 10px;
+    font-weight: bold;
+    color: #4caf50;
+}
+

@@ -1,21 +1,17 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from gensim.models import KeyedVectors
 
 app = Flask(__name__)
+CORS(app)  # Autoriser toutes les origines
 
 # Chemin vers le fichier du modèle
 model_path = "/Users/stanislasperidy/Desktop/Cemantix/frWac_no_postag_no_phrase_500_skip_cut100.bin"
+model = KeyedVectors.load_word2vec_format(model_path, binary=True)
 
-# Chargement du modèle
-try:
-    model = KeyedVectors.load(model_path)
-except Exception as e:
-    print(f"Erreur lors du chargement du modèle : {e}")
-    # Essaye de le charger au format Word2Vec
-    try:
-        model = KeyedVectors.load_word2vec_format(model_path, binary=True)
-    except Exception as e:
-        print(f"Erreur lors du chargement du modèle au format Word2Vec : {e}")
+# Calculer les 1000 mots les plus proches une fois au démarrage
+target_word = 'animal'
+top_1000_words = model.most_similar(target_word, topn=1000)
 
 @app.route('/similarity', methods=['POST'])
 def similarity():
@@ -27,7 +23,9 @@ def similarity():
     try:
         # Calculer la similarité entre les deux mots
         sim = model.similarity(word1, word2)
-        return jsonify({'similarity': sim})
+        position = next((index + 1 for index, (word, _) in enumerate(top_1000_words) if word == word1), None)
+
+        return jsonify({'similarity': float(sim), 'position': position})
     except KeyError:
         return jsonify({'error': 'Un ou plusieurs mots non trouvés dans le modèle.'}), 404
 
